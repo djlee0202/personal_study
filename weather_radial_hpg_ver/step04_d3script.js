@@ -19,17 +19,12 @@ var svg = d3.select("#weatherRadial")
 	.append("g")
 	.attr("transform", "translate(" + (margin.left + width/2) + "," + (margin.top + height/2) + ")");
 
-///////////////////////////////////////////////////////////////////////////
-//////////////////////////// Create scales ////////////////////////////////
-///////////////////////////////////////////////////////////////////////////
-
-//Parses a string into a date
+//Step 01. Create scales
+//Parses the date & time
 var parseDate = d3.time.format("%Y-%m-%d").parse;
 
 //Turn strings into actual numbers/dates
-weathercolumbia.forEach(function(d) {
-	d.date = parseDate(d.date);
-});
+weathercolumbia.forEach(function(d) {d.date = parseDate(d.date);});
 
 //Set the minimum inner radius and max outer radius of the chart
 var	outerRadius = Math.min(width, height, 450)/2,
@@ -40,7 +35,6 @@ var colorScale = d3.scale.linear()
 	.domain([20, 60, 100])
 	.range(["#2c7bb6", "#ffff8c", "#d7191c"])
 	.interpolate(d3.interpolateHcl);
-//Question : what is the difference between interpolateHcl and interpolateLab
 
 
 //Scale for the heights of the bar, not starting at zero to give the bars an initial offset outward
@@ -54,21 +48,21 @@ var angle = d3.scale.linear()
 	.range([-180, 180])
 	.domain(d3.extent(weathercolumbia, function(d) { return d.date; }));
 
-///////////////////////////////////////////////////////////////////////////
+
 //////////////////////////// Create Titles ////////////////////////////////
-///////////////////////////////////////////////////////////////////////////
+
 
 var textWrapper = svg.append("g").attr("class", "textWrapper")
 	.attr("transform", "translate(" + Math.max(-width/2, -outerRadius - 170) + "," + 0 + ")");
 
-//Append title to the top
+//Append title
 textWrapper.append("text")
 	.attr("class", "title")
     .attr("x", -10)
     .attr("y", -outerRadius - 180)
     .text("Daily Temperatures : New York, 2015")
 
-//Append credit at bottom
+//Append credit
 
 textWrapper.append("text")
 	.attr("class", "credit")
@@ -95,12 +89,8 @@ textWrapper.append("text")
     .attr("y", -outerRadius - 90)
     .text("Created by Dongjin Lee");
 
-
-
-
-///////////////////////////////////////////////////////////////////////////
 ///////////////////////////// Create Axes /////////////////////////////////
-///////////////////////////////////////////////////////////////////////////
+
 
 //Wrapper for the bars and to position it downward
 var barWrapper = svg.append("g")
@@ -136,9 +126,7 @@ barWrapper.append("line")
 	.attr("x2", 0)
 	.attr("y2", -outerRadius * 1.7);
 
-///////////////////////////////////////////////////////////////////////////
-////////////////////////////// Draw bars //////////////////////////////////
-///////////////////////////////////////////////////////////////////////////
+//Draw the graph
 
 //Draw a bar per day were the height is the difference between the minimum and maximum temperature
 //And the color is based on the mean temperature

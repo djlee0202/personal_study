@@ -3,6 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="mystyle.css">
+	<div style="margin-top: 40px;">   </div>
 
 	<!-- D3.js -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
@@ -86,13 +87,66 @@
 	  		stroke-width: 1.5px;
 	  	}
 
+					.button {
+    background-color: #000000; /* Black */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+		.button span {
+		  cursor: pointer;
+		  display: inline-block;
+		  position: relative;
+		  transition: 0.5s;
+		}
+
+		.button span:after {
+		  content: '»';
+		  position: absolute;
+		  opacity: 0;
+		  top: 0;
+		  right: -20px;
+		  transition: 0.5s;
+		}
+
+		.button:hover span {
+		  padding-right: 25px;
+		}
+
+		.button:hover span:after {
+		  opacity: 1;
+		  right: 0;
+		}
+
+		.button1 {
+    background-color: white;
+    color: black;
+    border: 2px solid #000000;
+}
+
+.button1:hover {
+    background-color: #000000;
+    color: white;
+}
+
 	</style>
 
 
 </head>
 <body>
-	<div class="back">
-    <div class="button_base b01_simple_rollover">Change the map</div>
+	<button class="button button1" style="vertical-align:middle"><span> Click to see Boston's Weather</span></button>
+
+</div>
+
+</div>
 
 	<div id="weatherRadial"></div>
 	<script src="step04_d3script.js"></script>
