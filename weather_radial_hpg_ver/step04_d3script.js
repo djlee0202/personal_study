@@ -53,7 +53,8 @@ var angle = d3.scale.linear()
 
 
 var textWrapper = svg.append("g").attr("class", "textWrapper")
-	.attr("transform", "translate(" + Math.max(-width/2, -outerRadius - 170) + "," + 0 + ")");
+	.attr("transform", "translate(" + Math.max(-width/2, -outerRadius - 170) + "," + 0 + ")")
+	;
 
 //Append title
 textWrapper.append("text")
@@ -128,8 +129,8 @@ barWrapper.append("line")
 
 //Draw the graph
 
-//Draw a bar per day were the height is the difference between the minimum and maximum temperature
-//And the color is based on the mean temperature
+//Draw a bar per day were the height is the difference between the min and max temp
+//And the color is based on the mean temp
 barWrapper.selectAll(".tempBar")
  	.data(weathercolumbia)
  	.enter().append("rect")
@@ -217,3 +218,16 @@ legendsvg.append("g")
 	.attr("class", "axis")
 	.attr("transform", "translate(0," + (-240) + ")")
 	.call(xAxis);
+
+function updateData() {
+
+// Get the data again
+textWrapper.append("text")
+
+.attr("class", "title")
+.attr("x", -10)
+.attr("y", -outerRadius - 70)
+.text("Currently Not Available : Coming Soon!")
+
+
+	}
