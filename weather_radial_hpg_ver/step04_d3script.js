@@ -61,7 +61,7 @@ textWrapper.append("text")
 	.attr("class", "title")
     .attr("x", -10)
     .attr("y", -outerRadius - 180)
-    .text("Daily Temperatures : New York, 2015")
+    .text("Daily Temp. : Columbia University, 2015")
 
 //Append credit
 
@@ -216,7 +216,7 @@ legendsvg.append("g")
 	.attr("transform", "translate(0," + (-240) + ")")
 	.call(xAxis);
 
-function updateData() {
+function Boston_weather() {
 
 // Get the data again
 textWrapper.append("text")
@@ -224,7 +224,7 @@ textWrapper.append("text")
 .attr("class", "title")
 .attr("x", -10)
 .attr("y", -outerRadius - 70)
-.text("Currently Working on Transition / Coming Soon!")
+.text("Currently Working on Transition")
 
 //Turn strings into actual numbers/dates
 weatherBoston.forEach(function(d) {d.date = parseDate(d.date);});
