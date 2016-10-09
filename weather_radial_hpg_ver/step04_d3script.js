@@ -1,24 +1,19 @@
-///////////////////////////////////////////////////////////////////////////
-//////////////////// Set up and initiate svg containers ///////////////////
-///////////////////////////////////////////////////////////////////////////
 
-
-var margin = {
-	top: 20,
-	right: 20,
-	bottom: 20,
-	left: 20
-};
-var width = window.innerWidth - margin.left - margin.right - 20;
-var height = window.innerHeight - margin.top - margin.bottom - 20;
+//Set up and initiate svg
+var margin 	= {
+							top: 20,bottom: 20,
+							right: 20,left: 20
+							};
+var width 	= window.innerWidth - margin.left - margin.right - 20;
+var height 	= window.innerHeight - margin.top - margin.bottom - 20;
 
 //SVG container
-var svg = d3.select("#weatherRadial")
-	.append("svg")
-	.attr("width", width + margin.left + margin.right)
-	.attr("height", height + margin.top + margin.bottom)
-	.append("g")
-	.attr("transform", "translate(" + (margin.left + width/2) + "," + (margin.top + height/2) + ")");
+var svg 		= d3.select("#weatherRadial")
+							.append("svg")
+							.attr("width", width + margin.left + margin.right)
+							.attr("height", height + margin.top + margin.bottom)
+							.append("g")
+							.attr("transform", "translate(" + (margin.left + width/2) + "," + (margin.top + height/2) + ")");
 
 //Step 01. Create scales
 //Parses the date & time
