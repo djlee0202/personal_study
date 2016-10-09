@@ -76,19 +76,14 @@ textWrapper.append("text")
 	.attr("class", "credit")
     .attr("x", -10)
     .attr("y", -outerRadius - 130)
-    .text("Source 01 : http://weather-radials.com/");
+    .text("Source : http://weather-radials.com/");
 
 textWrapper.append("text")
 .attr("class", "credit")
   .attr("x", -10)
   .attr("y", -outerRadius - 110)
-  .text("Source 02 : http://bl.ocks.org/nbremer ");;
+  .text("Created by Dongjin Lee");;
 
-textWrapper.append("text")
-	.attr("class", "credit")
-    .attr("x", -10)
-    .attr("y", -outerRadius - 90)
-    .text("Created by Dongjin Lee");
 
 ///////////////////////////// Create Axes /////////////////////////////////
 
@@ -172,9 +167,8 @@ svg.append("defs")
 	.attr("offset", function(d,i) { return tempScale( tempPoint[i] )/width; })
 	.attr("stop-color", function(d,i) { return colorScale( tempPoint[i] ); });
 
-///////////////////////////////////////////////////////////////////////////
+
 ////////////////////////// Draw the legend ////////////////////////////////
-///////////////////////////////////////////////////////////////////////////
 
 var legendWidth = Math.min(outerRadius*1.4, 400);
 
@@ -227,7 +221,33 @@ textWrapper.append("text")
 .attr("class", "title")
 .attr("x", -10)
 .attr("y", -outerRadius - 70)
-.text("Currently Not Available : Coming Soon!")
+.text("Currently Working on Transition / Coming Soon!")
+
+//Turn strings into actual numbers/dates
+weatherBoston.forEach(function(d) {d.date = parseDate(d.date);});
+
+var angle = d3.scale.linear()
+	.range([-180, 180])
+	.domain(d3.extent(weatherBoston, function(d) { return d.date; }));
+
+//Wrapper for the bars and to position it downward
+var barWrapper = svg.append("g")
+	.attr("transform", "translate(" + 0 + "," + 0 + ")");
+
+////////////////////////////// Draw bars //////////////////////////////////
+//Draw a bar per day were the height is the difference between the minimum and maximum temperature
+//And the color is based on the mean temperature
+barWrapper.selectAll(".tempBar")
+ 	.data(weatherBoston)
+ 	.enter().append("rect")
+ 	.attr("class", "tempBar")
+ 	.attr("transform", function(d,i) { return "rotate(" + (angle(d.date)) + ")"; })
+ 	.attr("width", 1.5)
+	.attr("height", function(d,i) { return barScale(d.max_temp) - barScale(d.min_temp); })
+ 	.attr("x", -0.75)
+ 	.attr("y", function(d,i) {return barScale(d.min_temp); })
+ 	.style("fill", function(d) { return colorScale(d.mean_temp); });
+
 
 
 	}
