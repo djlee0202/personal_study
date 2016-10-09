@@ -2,6 +2,7 @@
 //////////////////// Set up and initiate svg containers ///////////////////
 ///////////////////////////////////////////////////////////////////////////
 
+
 var margin = {
 	top: 20,
 	right: 20,
@@ -56,12 +57,6 @@ var textWrapper = svg.append("g").attr("class", "textWrapper")
 	.attr("transform", "translate(" + Math.max(-width/2, -outerRadius - 170) + "," + 0 + ")")
 	;
 
-//Append title
-textWrapper.append("text")
-	.attr("class", "title")
-    .attr("x", -10)
-    .attr("y", -outerRadius - 180)
-    .text("Daily Temp. : Columbia University, 2015")
 
 //Append credit
 
@@ -122,10 +117,22 @@ barWrapper.append("line")
 	.attr("x2", 0)
 	.attr("y2", -outerRadius * 1.7);
 
-//Draw the graph
+//Draw the graph when button is clicked
 
+
+function Columbia_weather(){
 //Draw a bar per day were the height is the difference between the min and max temp
 //And the color is based on the mean temp
+
+//Append title
+textWrapper.append("text")
+.transition()
+.duration(2500)
+	.attr("class", "title")
+    .attr("x", -10)
+    .attr("y", -outerRadius - 180)
+    .text("Daily Temp. : New York, 2015")
+
 barWrapper.selectAll(".tempBar")
  	.data(weathercolumbia)
  	.enter().append("rect")
@@ -139,10 +146,12 @@ barWrapper.selectAll(".tempBar")
  	.attr("x", -0.75)
  	.attr("y", function(d,i) {return barScale(d.min_temp); })
  	.style("fill", function(d) { return colorScale(d.mean_temp); });
+} //Function Columbia Ends here
 
-///////////////////////////////////////////////////////////////////////////
+
+
 //////////////// Create the gradient for the legend ///////////////////////
-///////////////////////////////////////////////////////////////////////////
+
 
 //Extra scale since the color scale is interpolated
 var tempScale = d3.scale.linear()
@@ -215,6 +224,8 @@ legendsvg.append("g")
 	.attr("class", "axis")
 	.attr("transform", "translate(0," + (-240) + ")")
 	.call(xAxis);
+
+
 
 function Boston_weather() {
 
