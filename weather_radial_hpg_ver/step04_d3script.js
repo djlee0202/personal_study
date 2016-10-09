@@ -235,7 +235,7 @@ textWrapper.append("text")
 .attr("class", "title")
 .attr("x", -10)
 .attr("y", -outerRadius - 70)
-.text("Currently Working on Transition")
+.text("Currently Fixing.")
 
 //Turn strings into actual numbers/dates
 weatherBoston.forEach(function(d) {d.date = parseDate(d.date);});
