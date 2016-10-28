@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Bootstrap을 이용하여 Font 조정 -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <title>Seoul_Coffee</title>
+
+    <!-- Link Bootstrap's CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.0/css/swiper.min.css">
+
+      <!-- Link Goolge Font's CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+
+
+    <style>
+
+    /*Fonts*/
+    h1,h2,h3,h4,h5,h6
+    {font-family: 'Lobster';}
+
+    html, body {
+        position: relative;
+        height: 100%;
+    }
+    body {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        color:#000;
+        margin: 0;
+        padding: 0;
+    }
+    .swiper-container {
+        width: 600px;
+        padding-left: 200px;
+        position: relative;
+        height: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        z-index: 2;
+    }
+    .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+    }
+
+    #graphic {
+        position: absolute;
+        top: 0;
+        z-index: 2;
+        left: 0;
+    }
+
+    /* 맵 위엥서의 원 위의 스타일 조정*/
+
+
+          svg .municipality {
+            fill: #efefef;
+            stroke: #fff;
+          }
+          svg .municipality-label {
+            fill: #bbb;
+            font-size: 12px;
+            font-weight: 300;
+            text-anchor: middle;
+          }
+          svg #map text {
+            color: #333;
+            font-size: 10px;
+            text-anchor: middle;
+          }
+          svg #places text {
+            color: #777;
+            font: 10px sans-serif;
+            text-anchor: start;
+          }
+
+          }
+
+
+
+    </style>
+</head>
+<body>
+
+    <!-- Swiper -->
+    <div id="graphic"></div>
+
+    <div class="swiper-container">
+        <h2 >      Top 15 Animal Cafes in Seoul</h2>
+        <h3 >      Slide Downward &darr;</br></h3>
+        <h5 >      D3.js and TopoJSON</br>
+          <a href="http://www.timeout.com/seoul/restaurants/the-citys-best-coffee">Data Location</a> by timeout.com</a>
+        </h5>
+
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" id="slide-1">
+
+
+
+              <h3 align="left">
+                If there is one thing Korea is known for other than K-Pop,
+                it would have to be interesting and pretty cafes all around. It is your mission to visit as many cafes as you can.</h3></div>
+            <div class="swiper-slide" id="slide-2">Slide 2</div>
+            <div class="swiper-slide" id="slide-3">Slide 3</div>
+            <div class="swiper-slide" id="slide-4">Slide 4</div>
+
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <!-- Swiper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.0/js/swiper.min.js"></script>
+
+
+
+    <!--topojson & d3-->
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://d3js.org/topojson.v1.min.js"></script>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Swiper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.0/js/swiper.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+
+    // If we've moved to a new slide, fire to 'slideto' event
+    // If we've left a slide, fire the 'slidefrom' event
+    var currentSlide, lastSlide;
+
+    var slideInEvent = new Event('slidein'),
+        slideOutEvent = new Event('slideout');
+
+    function testSlideChange(swiper, progress) {
+        currentSlide = swiper.slides[swiper.activeIndex];
+        if(currentSlide && (currentSlide != lastSlide)) {
+            currentSlide.dispatchEvent(slideInEvent);
+            if(lastSlide) lastSlide.dispatchEvent(slideOutEvent);
+        }
+        lastSlide = currentSlide;
+    }
+
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        onProgress: testSlideChange,
+        direction: 'vertical',
+        freeMode: true,
+        slidesPerView: 1,
+        paginationClickable: true,
+        spaceBetween: 30,
+        mousewheelControl: true
+    });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.2/d3.min.js"></script>
+
+    <script src="slides.js"></script>
+
+</body>
+</html>
