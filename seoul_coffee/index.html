@@ -44,14 +44,16 @@
     </style>
   </head>
   <body>
-    <div id="chart"></div>
+
     <div id="title">
-        <h2>Testing the map</h2>
-        <p> D3.js and TopoJSON
+        <h2>Top 25 cafes for coffee in Seoul</h2>
+        <p> D3.js and TopoJSON</br>
+          <a href="http://www.timeout.com/seoul/restaurants/the-citys-best-coffee">Data Location</a> by timeout.com</a>
         </p>
     </div>
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <script src="https://d3js.org/topojson.v1.min.js"></script>
+    <div id="chart"></div>
     <script>
     var width = 1200,
         height = 800;
@@ -84,7 +86,7 @@
           .attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
           .attr("dy", ".35em")
           .attr("class", "municipality-label")
-          .text(function(d) { return d.properties.name; })
+          .text(function(d) { return d.properties.name_eng; })
     });
 
     d3.csv("places.csv", function(data) {
