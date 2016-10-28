@@ -231,9 +231,15 @@ textWrapper.append("text")
 .attr("x", -10)
 .attr("y", -outerRadius - 70)
 .text("Currently Fixing.")
-
 //Turn strings into actual numbers/dates
-weatherBoston.forEach(function(d) {d.date = parseDate(d.date);});
+weatherBoston.forEach(function(d) {
+	try {
+		d.date = parseDate(d.date);
+	} catch(err) {
+		// do nothing if it fails
+	}
+});
+console.log(weatherBoston)
 
 var angle = d3.scale.linear()
 	.range([-180, 180])
@@ -244,21 +250,21 @@ var barWrapper = svg.append("g")
 	.attr("transform", "translate(" + 0 + "," + 0 + ")");
 
 
-barWrapper.selectAll(".tempBar")
- 	.data(weathercolumbia)
- 	.enter().append("rect")
- 	.attr("class", "tempBar")
-	.attr("width", 1.5)
-	.attr("height",0)
-	.transition()
-	.duration(2500)
+// barWrapper.selectAll(".tempBar")
+//  	.data(weathercolumbia)
+//  	.enter().append("rect")
+//  	.attr("class", "tempBar")
+// 	.attr("width", 1.5)
+// 	.attr("height",0)
+// 	.transition()
+// 	.duration(2500)
 
 ////////////////////////////// Draw bars //////////////////////////////////
 //Draw a bar per day were the height is the difference between the minimum and maximum temperature
 //And the color is based on the mean temperature
-barWrapper.selectAll(".tempBar2")
+barWrapper.selectAll(".tempBar")
  	.data(weatherBoston)
- 	.enter().append("rect")
+ // 	.enter().append("rect")
  	.attr("class", "tempBar")
  	.attr("transform", function(d,i) { return "rotate(" + (angle(d.date)) + ")"; })
  	.attr("width", 1.5)
