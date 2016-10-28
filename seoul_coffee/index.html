@@ -46,22 +46,15 @@
   <body>
     <div id="chart"></div>
     <div id="title">
-        <h2>식신로드 서울지역 만점식단 20선</h2>
-        <p>식신로드에서 만점을 받은 음식점을 D3.js, TopoJSON을 이용해 지도를 그렸습니다.
-        지도 만드는 법은 <a href="http://www.lucypark.kr/blog/2015/06/24/seoul-matzip-mapping/">D3를 이용한 서울시내 맛집 시각화 (Feat. 식신로드)</a>를 참고해주세요.
-        <p>
-          <a href="http://www.wikitree.co.kr/main/news_view.php?id=217101">Data</a> by Wikitree</a>
-          and <a href="https://gist.github.com/e9t/ba9edd99793a5c91eaab">code</a>
-          by <a href="http://lucypark.kr">Lucy Park</a>.
-          <br>
-          <a href="http://opensource.org/licenses/Apache-2.0">Licensed with Apache 2.0</a>
+        <h2>Testing the map</h2>
+        <p> D3.js and TopoJSON
         </p>
     </div>
-    <script src="http://d3js.org/d3.v3.min.js"></script>
-    <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://d3js.org/topojson.v1.min.js"></script>
     <script>
-    var width = 800,
-        height = 600;
+    var width = 1200,
+        height = 800;
 
     var svg = d3.select("#chart").append("svg")
         .attr("width", width)
