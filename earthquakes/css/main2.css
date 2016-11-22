@@ -1,0 +1,131 @@
+* {
+  margin: 0px;
+  padding: 0px; }
+
+a {
+  color: green;
+  text-decoration: none; }
+
+#main-window {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  height: 650px;
+  width: 1200px; }
+
+#globe {
+  margin-left: 0px;
+  margin-right: auto;
+  float: left;
+  pointer-events: all;
+  background-color: white;
+  width: 650px; }
+
+.globe-outline {
+  fill: #DCDCDD;
+  fill-opacity: 1.0;
+  stroke: #4C5C68;
+  stroke-width: 3; }
+
+#resume {
+  position: relative;
+  top: 25px;
+  left: 35px;
+  width: 60px;
+  height: 60px;
+  z-index: 2; }
+
+.resume-stopped {
+  background-image: url(../image/play.svg);
+  background-repeat: no-repeat; }
+
+.resume-playing {
+  background-image: url(../image/pause.svg);
+  background-repeat: no-repeat; }
+
+#description {
+  margin-left: 0px;
+  padding-top: 25px;
+  padding-left: 35px;
+  float: left;
+  width: 500px;
+  font-family: lato, serif; }
+
+#titling {
+  margin-top: 15px;
+  float: top;
+  font-size: 1.67em; }
+
+#main-text {
+  font-size: 1em;
+  float: bottom; }
+
+#main-text h2 {
+  font-size: 1.33em;
+  margin-top: 18px;
+  margin-bottom: 15px; }
+
+#data-text {
+  font-size: 0.9em;
+  margin-bottom: 25px; }
+
+#rollover {
+  width: 500px;
+  height: 60px; }
+
+#sample-quake {
+  margin-top: 20px;
+  display: block;
+  float: left;
+  width: 50px;
+  height: 50px; }
+
+.sample-quake {
+  stroke: #A0A0A0;
+  stroke-width: 2; }
+
+.sample-quake-text {
+  color: #656565; }
+
+#current-quake {
+  display: block;
+  margin-top: 20px;
+  padding-top: 6px;
+  padding-left: 8px;
+  float: left;
+  height: 50px;
+  width: 400px; }
+
+#key {
+  display: block;
+  margin-top: 45px;
+  width: 400px;
+  margin-left: 50px;
+  margin-right: 50px;
+  text-align: center; }
+
+#key p {
+  margin: 0px;
+  font-size: 0.75em;
+  color: #a0a0a0; }
+
+.quake {
+  stroke: white;
+  stroke-width: 1px; }
+
+.quake-selected {
+  stroke: #46422C;
+  stroke-width: 2px; }
+
+path {
+  fill: #C12035;
+  stroke: white; }
+
+path.quake {
+  fill: #f00;
+  stroke: #f00;
+  z-index: 2; }
+
+path.country {
+  fill: #4C5C68;
+  stroke: #fff; }

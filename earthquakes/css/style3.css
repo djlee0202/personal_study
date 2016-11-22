@@ -1,0 +1,88 @@
+
+/* For width smaller than 400px: */
+body {
+    background-repeat: no-repeat;
+    background-image: url('../image/smallcover.png');
+    background-attachment: fixed;
+    background-size:cover;
+}
+
+/* For width 400px and larger: */
+@media only screen and (min-device-width: 780px) {
+    body {
+       	background-image: url("../image/bigcover.jpg");
+		background-attachment: fixed;
+		background-repeat:no-repeat;
+   		background-size:cover;
+    }
+}
+
+
+header {
+  height: 780px;
+
+}
+
+h1#name{
+	margin-top: 10%;
+	text-align: left;
+	margin-left: 10%;
+	margin-right: 0%;
+	font-size: 60px;
+	font-family: 'Vollkorn', cursive;
+	color:white;
+	z-index: 2;
+	text-shadow: 4px 2px 20px rgba(150, 150, 150, 1);
+
+}
+
+.main-nav,
+#main {
+  position: relative;
+}
+.main-nav {
+  background: #4C5C68;
+  height: 150px;
+  z-index: 100;
+  margin-bottom: -125px;
+  box-shadow: 0 2px 3px rgba(0,0,0,.4);
+  opacity: 0.6;
+}
+
+#main {
+  background: white;
+  padding: 250px 50px 50px;
+}
+
+#nav-name{
+	float:left;
+	font-size: 45px;
+	margin-left: 4%;
+	margin-top:2.5%;
+	font-family: font-family: 'Vollkorn', sans-serif;
+	font-weight: 800;
+	color:white;
+}
+
+
+.page-title{
+	margin-top: 5%;
+	color:#5CA4A9;
+}
+
+#draw-line{
+	border-bottom:8px solid #f7f7f7;
+}
+
+.main-content{
+	margin-top: 4%;
+	font-family: 'Vollkorn', serif;
+	font-size: 16px;
+	margin-right: 5%;
+	margin-left: 2%;
+}
+
+#main-pic{
+	width:100%;
+	margin-top: 5%;
+}

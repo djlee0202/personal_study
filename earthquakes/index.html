@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    	<meta charset="utf-8">
+    	<title>Earthquake </title>
+
+				<!-- Website Modification Links -->
+        <link href='https://fonts.googleapis.com/css?family=Overlock:700' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Dosis:800,500,300' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="css/style3.css" />
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+       <!-- Globe Modification Links -->
+			 <link rel="stylesheet" href="css/main2.css" type="text/css" />
+				<script type="text/javascript" src="scripts/d3.v2.min.js"></script>
+		    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		    <!-- <script src="http://use.edgefonts.net/lato.js"></script> -->
+
+				<style>
+				h1.padding {padding-right: 5%;}
+				</style>
+
+    </head>
+
+    <body>
+        <header class="header">
+            <div class="row">
+                <div class="col-md-12" id = "title"></div>
+                <div class="col-md-12">
+                    <h1 id="name"  style="text-align:right" class="padding"> How many earthquakes occured yesterday?
+											<br>by Dongjin Lee <br>
+											<span id="replace" class="introchange"> What should we do? </span></h1>
+                </div>
+            </div>
+        </header>
+        <div class="row">
+            <div class="col-md-12" id = "nav">
+                <nav class="main-nav">
+                    <p id="nav-name"> Real Time Earthquake Information </p>
+                </nav>
+            </div>
+            <div class="col-md-12" id="main">
+                <div class="col-md-12" id= "draw-line">
+                    <!-- <h1 class="page-title">01. Current Feed</h1> -->
+										<div id="titling"><h1>01. Earthquakes from the Past 30 days.</h1></div>
+
+                </div>
+                <div class="col-md-12" >
+
+                    <div class ="col-md-7">
+
+
+
+
+											<!-- Globe Projection Start -->
+											<div id="main-window">
+											    <div id="globe"></div>
+											    <div id="resume"></div>
+											    <div id="description">
+
+											        <div id="main-text">
+											            <h2> This is the significant earthquakes happend around the world from the past 30 days.
+																		Data current as of <span id="load-time">(Loading data...).</span></h2>
+
+											            <p id="data-text">
+											                USGS provides the Earthquake Notification Service (ENS) service which provides automated notifications to you when earthquakes happen.
+																			They also provide GeoJson feed which contains a subset of the event data for the event lists. Visit
+											                <a href="http://earthquake.usgs.gov/" target="_blank">USGS Earthquake Hazards Program</a> for more detail information.
+
+																			<br>
+
+
+
+											            <div id="rollover">
+											                <div id="sample-quake"></div>
+											                <a id="current-quake" href="Javascript: void(0);" target="_blank">
+											                    <p class="sample-quake-text">Highlight an earthquake on the left for additional details and a link to the USGS information center.</p>
+											                </a>
+											            </div>
+																	</p>
+											        </div>
+
+											        <div id="key">
+																<h3>Note : Earthquake Magnitude</h3>
+																 <p id="key-place">
+																 </p><p id="key-text">Click to see detail information</p>
+															</div>
+											    </div>
+											</div>
+
+											<script type="text/javascript" src="scripts/quake.js"></script>
+											<script type="text/javascript">
+											    // from Mike Bostock's 10-18-11 talk: https://github.com/mbostock/d3/blob/gh-pages/talk/20111018/world-countries.json
+											    var countriesJSON = "data/worldcountries.geo.json";
+											    // var earthQuakesJSON = ["data/major_earthquakes_last_month.json"];
+											    var windowDim = 600;
+											    var paddingDim = 50;
+											    var id = "#globe";
+											    var resumeId = "#resume";
+											    var keyId = "#key-place";
+											    var quakeTextId = "#current-quake";
+											    var quakeLinkId = "#current-quake-link";
+											    var loadTimeId = "#load-time";
+
+											    var keyTextId = "#key-text"
+											    var keyTextArray = [
+											                    "Click to see the detail explanation.",
+											                    "<2.0 - Microearthquake, rarely felt, millions annually",
+											                    "2.0-2.9 - Minor earthquake, weak shaking may be felt near the epicenter, 1.3M annually",
+											                    "3.0-3.9 - Minor earthquake, felt tens of kilometers from the epicenter, 130,000 annually",
+											                    "4.0-4.9 - Light earthquake, noticeable indoor shaking, but none to slight damage, 10,000-15,000 annually",
+											                    "5.0-5.9 - Moderate earthquake, moderate to major damage to poorly constructed buildings, 1,000-1,500 annually",
+											                    "6.0-6.9 - Strong earthquake, damage to many to all buildings, felt for hundreds of kilometers, 100-150 annually",
+											                    "7.0-7.9 - Major earthquake, major damage over large areas, including significant building collapses, 10-20 annually",
+											                    "8.0-8.9 - Great earthquake, major damage over very large areas, with very strong shaking for hundreds of kilometers, approximately 1 per year",
+											                    "9.0+ - Great earthquake, massive destruction, 1 estimated every 5 to 50 years"
+											                    ];
+
+											    var arcWidth = -2;
+											    var startColor = "#E6D97D";
+											    var endColor = "#C93131";
+											    var highlightColor = "#46422C";
+											    var sampleQuakeId = "#sample-quake";
+											    var useAPI = true;
+											    var minMag = 5.5;
+											    var currentDate = new Date().valueOf();
+											    var dateDiff = 1000 * 60 * 60 * 24 * 30; // 30 days
+											    var newDate = new Date(currentDate - dateDiff).toISOString();
+											    var minSig = 550;
+
+
+											    var earthQuakesJSON1 = ("http://earthquake.gov/fdsnws/event/1/query?format=geojson" +
+											                          "&eventtype=earthquake" +
+											                          "&minmagnitude=" + "2.0" +
+											                          "&starttime=" + newDate +
+											                          "&minsig=" + minSig.toString());
+
+											    var earthQuakesJSON2 = ("http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson" +
+											                          "&eventtype=earthquake" +
+											                          "&minmagnitude=" + minMag.toPrecision(2) +
+											                          "&starttime=" + newDate +
+											                          "&minsig=" + 0);
+
+											    var earthQuakesJSON = [earthQuakesJSON1, earthQuakesJSON2]; // significant events (650+) 5.5+
+
+											    drawGlobe(id, windowDim, paddingDim, countriesJSON, earthQuakesJSON, useAPI,
+											                resumeId, keyId, quakeTextId, quakeLinkId, sampleQuakeId, loadTimeId, keyTextId, keyTextArray,
+											                arcWidth, startColor, endColor, highlightColor);
+											</script>
+
+											<!-- Globe Projection End -->
+
+
+
+
+                        <p class="main-content">This is the explanation paragraph. <br>
+													<a class="main-link" href="http://www.columbia.edu/">Columbia University Link</a>.
+                        <br>
+                          </p>
+
+
+
+
+
+
+
+
+
+
+											<!-- Analysis Paragraph Start -->
+												<div class="col-md-12" id= "draw-line">
+														<div id="titling"><h1>02. Detail Analysis</h1></div>
+
+				                </div>
+
+												<script src='scripts/d3.js' type='text/javascript'></script>
+											  <script src='scripts/crossfilter.js' type='text/javascript'></script>
+											  <script src='scripts/dc.js' type='text/javascript'></script>
+											  <script src='scripts/jquery-1.9.1.min.js' type='text/javascript'></script>
+											  <script src='scripts/bootstrap.min.js' type='text/javascript'></script>
+
+											  <link href='css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+											  <link href='css/dc.css' rel='stylesheet' type='text/css'>
+
+											  <style type="text/css"></style>
+
+
+
+												<div class='container' id='main-container'>
+												<div class='content'>
+												<div class='container' style='font: 12px sans-serif;'>
+
+												  <div class='row'>
+												    <div class='span12'>
+												      <div class='row'>
+												        <div class='pie-graph span6' id='dc-magnitude-chart'>
+												        <h4>Events by Magnitude</h4>
+												        </div>
+												        <div class='pie-graph span6' id='dc-depth-chart'>
+													      <h4>Events by Depth (km)</h4>
+												        </div>
+												      </div>
+												    </div>
+												  </div>
+
+												  <div class='row'>
+												    <div class='span12' id='dc-time-chart'>
+												      <h4>Events per hour</h4>
+												    </div>
+												  </div>
+
+												  <div class='row'>
+													<div class='pie-graph span12'>
+												      <table class='table table-hover' id='dc-table-graph'>
+												        <thead>
+												          <tr class='header'>
+												            <th>DTG</th>
+												            <th>Lat</th>
+												            <th>Long</th>
+												            <th>Depth</th>
+												            <th>Magnitude</th>
+												            <th>Google Map</th>
+												            <th>OSM Map</th>
+												          </tr>
+												        </thead>
+												      </table>
+													</div>
+												  </div>
+
+												<H5>Generated with
+												  <a href="http://nickqizhu.github.io/dc.js/">dc.js</a>,
+												  <a href="http://square.github.io/crossfilter/">crossfilter</a>,
+												  <a href="http://d3js.org/">d3.js</a> and
+												  <a href="http://twitter.github.io/bootstrap/">bootstrap</a>.
+												</H5>
+												<p>Earthquake data via <a href="http://geonet.org.nz">Geonet</a>.</p>
+
+												</div>
+												</div>
+												</div>
+
+												<script>
+
+												/**********************************
+												* Step0: Load data from json file *
+												**********************************/
+
+												// load data from a csv file
+												d3.csv("quakes.csv", function (data) {
+
+												  // format our data
+												  var dtgFormat = d3.time.format("%Y-%m-%dT%H:%M:%S");
+
+												  data.forEach(function(d) {
+												    d.dtg   = dtgFormat.parse(d.origintime.substr(0,19));
+												    d.lat   = +d.latitude;
+												    d.long  = +d.longitude;
+												    d.mag   = d3.round(+d.magnitude,1);
+												    d.depth = d3.round(+d.depth,0);
+												  });
+
+												/******************************************************
+												* Step1: Create the dc.js chart objects & ling to div *
+												******************************************************/
+
+												  var magnitudeChart = dc.barChart("#dc-magnitude-chart");
+												  var depthChart = dc.barChart("#dc-depth-chart");
+												  var timeChart = dc.lineChart("#dc-time-chart");
+												  var dataTable = dc.dataTable("#dc-table-graph");
+
+												/****************************************
+												* 	Run the data through crossfilter    *
+												****************************************/
+
+												  var facts = crossfilter(data);  // Gets our 'facts' into crossfilter
+
+												/******************************************************
+												* Create the Dimensions                               *
+												* A dimension is something to group or filter by.     *
+												* Crossfilter can filter by exact value, or by range. *
+												******************************************************/
+
+												  // for Magnitude
+												  var magValue = facts.dimension(function (d) {
+												    return d.mag;       // group or filter by magnitude
+												  });
+												  var magValueGroupSum = magValue.group()
+												    .reduceSum(function(d) { return d.mag; });	// sums the magnitudes per magnitude
+												  var magValueGroupCount = magValue.group()
+												    .reduceCount(function(d) { return d.mag; }) // counts the number of the facts by magnitude
+
+												  // For datatable
+												  var timeDimension = facts.dimension(function (d) {
+												    return d.dtg;
+												  }); // group or filter by time
+
+												  // for Depth
+												  var depthValue = facts.dimension(function (d) {
+												    return d.depth;
+												  });
+												  var depthValueGroup = depthValue.group();
+
+												  // define a daily volume Dimension
+												  var volumeByDay = facts.dimension(function(d) {
+												    return d3.time.hour(d.dtg);
+												  });
+												  // map/reduce to group sum
+												  var volumeByDayGroup = volumeByDay.group()
+												    .reduceCount(function(d) { return d.dtg; });
+
+												/***************************************
+												* 	Step4: Create the Visualisations   *
+												***************************************/
+
+												  // Magnitide Bar Graph Summed
+												  magnitudeChart.width(480)
+												    .height(150)
+												    .margins({top: 10, right: 10, bottom: 20, left: 40})
+												    .dimension(magValue)								// the values across the x axis
+												    .group(magValueGroupSum)							// the values on the y axis
+													.transitionDuration(500)
+												    .centerBar(true)
+													.gap(56)                                            // bar width Keep increasing to get right then back off.
+												    .x(d3.scale.linear().domain([0.5, 7.5]))
+													.elasticY(true)
+													.xAxis().tickFormat(function(v) {return v;});
+
+												  // Depth bar graph
+												  depthChart.width(480)
+												    .height(150)
+												    .margins({top: 10, right: 10, bottom: 20, left: 40})
+												    .dimension(depthValue)
+												    .group(depthValueGroup)
+													.transitionDuration(500)
+												    .centerBar(true)
+													.gap(1)                    // bar width Keep increasing to get right then back off.
+												    .x(d3.scale.linear().domain([0, 100]))
+													.elasticY(true)
+													.xAxis().tickFormat(function(v) {return v;});
+
+												  // time graph
+												  timeChart.width(960)
+												    .height(100)
+												    .margins({top: 10, right: 10, bottom: 20, left: 40})
+												    .dimension(volumeByDay)
+												    .group(volumeByDayGroup)
+												    .transitionDuration(500)
+													.elasticY(true)
+												    .x(d3.time.scale().domain([new Date(2013, 6, 18), new Date(2013, 6, 24)])) // scale and domain of the graph
+												    .xAxis();
+
+												  // Table of earthquake data
+												  dataTable.width(960).height(800)
+												    .dimension(timeDimension)
+													.group(function(d) { return "List of all earthquakes corresponding to the filters"
+													 })
+													.size(10)							// number of rows to return
+												    .columns([
+												      function(d) { return d.dtg; },
+												      function(d) { return d.lat; },
+												      function(d) { return d.long; },
+												      function(d) { return d.depth; },
+												      function(d) { return d.mag; },
+													  function(d) { return '<a href=\"http://maps.google.com/maps?z=11&t=m&q=loc:' + d.lat + '+' + d.long +"\" target=\"_blank\">Google Map</a>"},
+													  function(d) { return '<a href=\"http://www.openstreetmap.org/?mlat=' + d.lat + '&mlon=' + d.long +'&zoom=11'+ "\" target=\"_blank\"> OSM Map</a>"}
+												    ])
+												    .sortBy(function(d){ return d.dtg; })
+												    .order(d3.ascending);
+
+												/****************************
+												* Step6: Render the Charts  *
+												****************************/
+
+												  dc.renderAll();
+
+												});
+
+												</script>
+
+													<!-- Analysis Paragraph Ends -->
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script src="scripts/velocity.min.js"></script>
+    <script src="scripts/velocity.ui.min.js"></script>
+    <script src="scripts/change_the_text.js"></script>
+
+    <script>
+        var  mn = $(".main-nav");
+            mns = "main-nav-scrolled";
+            hdr = $('header').height();
+
+        $(window).scroll(function() {
+          if( $(this).scrollTop() > hdr ) {
+            mn.addClass(mns);
+          } else {
+            mn.removeClass(mns);
+          }
+        });
+    </script>
+
+</html>
