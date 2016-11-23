@@ -130,13 +130,13 @@
 											    var minSig = 550;
 
 
-											    var earthQuakesJSON1 = ("http://earthquake.gov/fdsnws/event/1/query?format=geojson" +
+											    var earthQuakesJSON1 = ("https://earthquake.gov/fdsnws/event/1/query?format=geojson" +
 											                          "&eventtype=earthquake" +
 											                          "&minmagnitude=" + "2.0" +
 											                          "&starttime=" + newDate +
 											                          "&minsig=" + minSig.toString());
 
-											    var earthQuakesJSON2 = ("http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson" +
+											    var earthQuakesJSON2 = ("https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson" +
 											                          "&eventtype=earthquake" +
 											                          "&minmagnitude=" + minMag.toPrecision(2) +
 											                          "&starttime=" + newDate +
