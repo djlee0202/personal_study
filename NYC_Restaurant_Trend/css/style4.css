@@ -1,0 +1,149 @@
+
+#explanation {
+	font-size: 18px;
+	top: 110px;
+	left: 500px;
+	width: 0px;
+	line-height: 150%;
+}
+
+.expl-text {
+	position: relative;
+	text-align: left;
+}
+
+#section {
+  position: relative;
+  top: 50px;
+  left: 500px;
+  width: 320px;
+  visiblity: visible;
+}
+
+#sectionText {
+	color: #6B6B6B;
+	text-align: justify;
+  font-size: 25px;
+	line-height: 150%;
+}
+
+#clickWrapper {
+  z-index: 10;
+  display: block;
+  position: absolute;
+  width:200px;
+  top: 400px;
+  visibility: auto;
+  text-align: center;
+
+}
+
+#resetbuttonWrapper{
+
+	position: relative;
+	width: 300px;
+	height: 30px;
+	margin: 0 auto;
+}
+
+
+.circleBase {
+	position: relative;
+    border-radius: 50%;
+    behavior: url(PIE.htc); /* remove if you don't care about IE8 */
+    width: 10px;
+    height: 10px;
+    border: 1px solid #D3D3D3;
+	top: -5px;
+	display:inline-block;
+    background: white;
+}
+
+
+.clickable {
+	cursor: pointer;
+}
+
+
+.geo-path {
+	stroke:  white;
+	stroke-width: 1.5px;
+	stroke-opacity: 1;
+	fill: #E5D9C9;
+	fill-opacity: 1;
+
+}
+
+.path {
+	stroke:  white;
+	stroke-width: 1.5px;
+	stroke-opacity: 1;
+	fill: #E5D9C9;
+	fill-opacity: 1;
+}
+
+.boro_2014 {
+	fill: #858483;
+	color: #858483;
+	opacity: 1;
+}
+
+.boro_2015 {
+	fill: #DA6761;
+	color: #DA6761;
+	opacity: 1;
+}
+
+.titleTop {
+	font-family: Oswald;
+	font-size: 16px;
+	font-weight: 300;
+	fill: #525252;
+}
+
+.title {
+	font-size: 12px;
+	fill: #A6A6A6;
+}
+
+.barTitle {
+	font-size: 14px;
+}
+
+.subTitle {
+	text-anchor: middle;
+	font-size: 10px;
+	fill: #A3A3A3;
+	font-weight: 300;
+}
+
+text {
+	cursor: default;
+	fill: #525252;
+}
+
+.btn-group {
+	position: relative;
+	top: 550px;
+  	left: 100px;
+  	visibility: hidden;
+}
+
+.btn {
+	font-size: 10px;
+	border-radius:0;
+	padding: 3px 7px;
+	line-height: 1.5;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 300;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #8C8C8C;
+  shape-rendering: crispEdges;
+}
+.axis text {
+	font-size: 8px;
+}

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>NYC Restaurant</title>
+
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/topojson.v0.min.js"></script>
+    <script src="exploder.js"></script>
+    <link href='css/style4.css' rel='stylesheet' type='text/css'>
+
+    <!-- Used style -->
+    <link rel="stylesheet" href="//www.propublica.org/css/960/reset.css" type="text/css" media="all" charset="utf-8">
+    <link rel="stylesheet" href="//www.propublica.org/css/960/propublica-text.css" type="text/css" media="all" charset="utf-8">
+    <link rel="stylesheet" href="//www.propublica.org/css/master.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="//www.propublica.org/css/print.css" type="text/css" media="print" charset="utf-8">
+    <link rel="stylesheet" href="//www.propublica.org/css/headfoot2011.css" type="text/css" media="all" charset="utf-8">
+
+
+  </head>
+  <body>
+
+
+<div id="content" class="sidebar">
+  <div class="wrapper">
+    <div class="content-full">
+      <h1> <br>The change of the NYC Restaurant trend </h1>
+    <div class="byline-block social-module">
+      <div class="authors">
+        <p class="byline">
+          By Dongjin Lee, LEDE Class Project - NYC Restaurant <br>December 01, 2016
+        </p>
+      </div>
+      <div class="clear"><!-- --></div>
+    </div>
+
+
+
+    <div class="container">
+
+      <p>
+        This project explores the current landscape of restaurants across NYC 5 boro, identifying relation between location and cuisine type.
+        <br> The report provides insight into trends in food preferences in each location , and cuisine’s type and rating across the city.
+        <br> The purpose of this project is to show the clear visualization of the following analysis.
+        <br> <a href="www.google.com"> Analysis Link (Python) </a>
+      </p>
+
+        <h2>
+          <br>
+          Click the map to see the trend of each borough.
+
+        </h2>
+
+
+      <div class="row">
+        <div id="explanation" class="expl-text"></div>
+        <div class="btn-group" data-toggle="buttons">
+          <label id="BronxButton" class="btn btn-default active"><input type="radio" class="btn-options"> Bronx </label>
+          <label id="BrooklynButton" class="btn btn-default"><input type="radio" class="btn-options"> Brooklyn </label>
+          <label id="ManhattanButton" class="btn btn-default"><input type="radio" class="btn-options"> Manhattan </label>
+          <label id="QueensButton" class="btn btn-default"><input type="radio" class="btn-options"> Queens </label>
+          <label id="StatenIsalndButton" class="btn btn-default"><input type="radio" class="btn-options"> S.Island </label>
+        </div>
+        <!-- Section on the right of the screen -->
+        <div id="section">
+          <div id="sectionText"></div>
+
+
+        </div>
+
+          <div id="chart-1"></div>
+
+        <div class="col-sm-4">
+          <h3>Article</h3>
+          <p>
+            The Bronx, Brooklyn, and Queens are the most diverse boroughs compared to Manhattan and Staten Island, with more than 30% of their populations identifying as Black, Asian, Multiracial, or Other (Crains).
+  This ethnnic diversity aligns with our finding that despite Manhattan having the most cuisine types overall, certain cuisine types are more common in different boroughs. American and Chinese restaurants were the most dominant cuisine types across all five boroughs, but the major differences exists once you move beyond the top two most common cuisines. Manhattan's top 5 is rounded out by Italian (3), Japanese (4) and Cafes/Coffee Shops (5). Queen's top 5 includes Latin (3), Pizza (4), and Korean (5). Brooklyn and the Bronx also include Pizza in the top 5, along with Carribbean and Mexican (Brooklyn), and Latin and Spanish (Bronx). Staten Island includes Pizza (3), Italian (4), and Mexican (5). Therefore there is a relationship between restaurant cuisine and the ethnic makeup of the borough in which it is located.
+          </p>
+          <p><em> Reference : Many of the code were from different sources. The reference are as follows.</em></p>
+          <p class="sources">
+                 <br>
+                 Referenced Code and Data Sources:
+                 <br> Original Idea / Inspired by : <a href=" http://www.businessinsider.com/best-nyc-restaurant-for-every-cuisine-2015-10 "> The best New York City restaurant for every type of cuisine <a>
+                 <br> 1. Html + Css Format : Propublica base format
+                 <br> 2.  <a href="http://data.beta.nyc//dataset/68c0332f-c3bb-4a78-a0c1-32af515892d6/resource/7c164faa-4458-4ff2-9ef0-09db00b509ef/download/42c737fd496f4d6683bba25fb0e86e1dnycboroughboundaries.geojson">
+                          NYC Json file from OPEN NYC DATA </a>
+                 <br> 3.  <a href="http://bl.ocks.org/phil-pedruco/6646844">NYC Projection on D3 </a> from phil-pedruco’s Block
+                 <br> 4.  New York City Restaurant Inspection Results from NYC OPEN DATA
+                 <br> 5.  And more.
+
+                </p>
+                <p >
+                  Note: This is the note section for futher explanation.
+                </p>
+        </div>
+      </div>
+    </div>
+
+
+              <!-- ////////////////////////////////////////////////////
+              ////////////////////////////////////////////////////
+              ///////////////////////////////////////////////////// -->
+
+
+
+
+	<!-- Buttons to switch back and forth ( Section A and Section B) -->
+	<div id="clickWrapper">
+		<div id="resetbuttonWrapper">
+      <p> Click the button below to Reset the map</p>
+      <br>
+			<div id="circle_1" class="circleBase clickable"></div>
+	</div>
+
+	<!-- 00. Data section -->
+	<script src="js/cuisines.js"></script>
+  <!-- 01. Starting screen & Section A-->
+  <script src="js/section_A.js"></script>
+	<!-- 02. Barchart of the Section B-->
+	<script src="js/barCharts.js"></script>
+	<!-- 03. Explanation of the Section B-->
+	<script src="js/section_B.js"></script>
+
+  <div id = "d3section">
+    <script>
+		var width = 1000,
+			height = 600;
+
+		var svg =  d3.select("#chart-1")
+        .append("svg")
+				.attr("width", width)
+				.attr("height", height);
+
+		var numFormat = d3.format(".1s")
+
+		var barChart = svg.append("g").attr("class", "barChart");
+		var barChart_other = svg.append("g").attr("class", "barChart_other");
+    var g = svg.append("g")
+
+		////////////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////////
+
+
+		//map
+    function map() { d3.json("js/nyc.json", function(error, nyb) {
+
+            console.log(nyb)
+
+            var projection = d3.geo.mercator()
+            .center([-73.20, 40.57  ])
+            .scale(40000)
+            .translate([800 , (400)]);
+
+          var path = d3.geo.path()
+              .projection(projection);
+
+          var g = svg.append("g");
+
+          var boroughs = g.append("g")
+            .attr("id", "boroughs")
+            .selectAll(".state")
+            .data(nyb.features)
+            .enter().append("path")
+            .attr('id', function (d) {
+              return "section_" + d.id;
+            })
+            .attr("fill", "pink")
+            .style("stroke", "grey")
+            // function (d) {
+            //   return getColor(Math.random() * 1000);
+            // })
+            .attr("d", path);
+
+            var explode_states = g.append("g")
+            .attr("id", "explode_states")
+            .selectAll("path")
+            .data(nyb.features)
+            .enter().append("path")
+            .attr("fill", "white")
+            .style("stroke", "red")
+            .attr('id', function (d) {
+              return "section_" + d.id;
+            })
+
+            .attr("d", path);
+
+
+
+          var exploder = d3.geo.exploder()
+            .projection(projection)
+            .size(function (d, i) {
+              return 300;
+            })
+            .position(function (d, i) {
+              return [700, 170];
+            })
+
+
+            explode_states.on('click', function () {
+                d3.selectAll('.highlighted-state')
+                  .transition()
+                  .duration(500)
+                  .attr("d", path)
+                  .attr("fill",'white')
+                  .attr("transform", "translate(0,0)")
+                  .each('end', function () {
+                    d3.select(this).classed('highlighted-state', false);
+                  })
+
+                var currentState = this;
+                console.log(currentState)
+
+                d3.select(this)
+                  .classed('highlighted-state', true)
+                  .transition()
+                  .duration(500)
+                  .call(exploder)
+                  .attr("fill",'red')
+                  .style("stroke", "red")
+                  .call(function(e){
+        				        section_B();
+                        if (currentState.id == "section_101") {Bronx_BarGraph();};
+                        if (currentState.id == "section_41") {Brooklyn_BarGraph();};
+                        if (currentState.id == "section_72") {Manhattan_BarGraph();};
+                        if (currentState.id == "section_23") {Queens_BarGraph();};
+                        if (currentState.id == "section_3") {StatenIsalnd_BarGraph();};
+                      });
+                  })
+                  .on('mouseover', function(d, i) {
+
+                d3.select(this).style('fill-opacity', 1);
+
+                })
+                .on('mouseout', function(d, i) {
+                  d3.selectAll('path').style({'fill-opacity':.7});
+                            });
+          });
+        }
+    map();
+
+
+    //Reset
+		d3.select("#circle_1")
+			.on("click", function(e){
+				section_A();
+        d3.selectAll("path").remove();
+        map()
+			})
+
+
+
+
+
+		//////////////// Buttons  ///////////////
+
+		//When you click the Bronx button
+		d3.select("#BronxButton")
+			.on("click", function(e){
+				rVar = "Bronx";
+				Bronx_BarGraph();
+		});
+
+		//When you click the Brooklyn button
+		d3.select("#BrooklynButton")
+			.on("click", function(e){
+				rVar = "Brooklyn";
+				Brooklyn_BarGraph();
+		});
+
+		//When you click the Manhattan button
+		d3.select("#ManhattanButton")
+			.on("click", function(e){
+				rVar = "Manhattan";
+				Manhattan_BarGraph();
+		});
+
+    //When you click the Queens button
+		d3.select("#QueensButton")
+			.on("click", function(e){
+				rVar = "Queens";
+				Queens_BarGraph();
+		});
+
+    //When you click the StatenIsalnd button
+		d3.select("#StatenIsalndButton")
+			.on("click", function(e){
+				rVar = "StatenIsalnd";
+				StatenIsalnd_BarGraph();
+		});
+
+		//Start
+		section_A();
+    </script>
+</div>
+
+    <!--
+///////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////// -->
+
+
+
+
+  </body>
+</html>
